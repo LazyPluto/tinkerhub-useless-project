@@ -17,11 +17,14 @@
 	// let words = prepareWords(
 	// 	'The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog'
 	// );
-	let words = prepareWords();
-	let letterStates = $state(prepareStates(words));
+	let words = $state(prepareWords());
+	let letterStates = $derived(prepareStates(words));
+	let keymapType = $state(LayoutType.ALPHABETIC);
 	// let keymap = $state(prepareRandomKeymap(0.5));
 	// let keymap = $state(prepareRandomKeymap(0));
-	let keymap = $state(prepareABCDKeymap());
+	let keymap = $derived(
+		keymapType === LayoutType.ALPHABETIC ? prepareABCDKeymap() : prepareRandomKeymap(0.9)
+	);
 	let timeLeft = $state(0);
 	let nextWord = $state(0);
 	let nextChar = $state(0);
@@ -158,8 +161,16 @@
 
 	// Reset the test
 	function resetTest() {
+		if (testState === TestState.RUNNING) stopTest();
+
+		words = prepareWords();
 		testState = TestState.NOT_STARTED;
 		wpm = 0;
+	}
+
+	function switchLayoutState() {
+		if (keymapType === LayoutType.ALPHABETIC) keymapType = LayoutType.RANDOM;
+		else keymapType = LayoutType.ALPHABETIC;
 	}
 
 	onMount(() => {
@@ -172,6 +183,13 @@
 
 <div class="test-container">
 	<h1>Chaos Keys</h1>
+
+	<div class="controls">
+		<button onclick={() => switchLayoutState()}
+			>{keymapType === LayoutType.ALPHABETIC ? 'Alphabetic' : 'Random'}</button
+		>
+		<button onclick={() => resetTest()}>Reset</button>
+	</div>
 
 	<div class="stats {testState === TestState.NOT_STARTED ? 'hidden' : ''}">
 		<p>{timeLeft}s</p>
@@ -219,9 +237,28 @@
 		margin: 0;
 	}
 
+	.controls {
+		display: flex;
+		gap: 8px;
+		margin-top: 2%;
+		padding: 2px 4px;
+		background-color: #1818258f;
+		border: 2px solid #45475a;
+		border-radius: 16px;
+	}
+
+	.controls button {
+		padding: 8px;
+		color: #45475a;
+	}
+
+	.controls button:hover {
+		color: #cdd6f4;
+	}
+
 	.stats {
 		width: 75%;
-		margin-top: 2%;
+		margin-top: 2vh;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
@@ -234,13 +271,13 @@
 
 	.words {
 		width: 75%;
-		height: 40%;
+		height: 35%;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
 		align-content: flex-start;
 		overflow: hidden;
-		gap: 0.5rem 1rem;
+		gap: 0rem 1rem;
 		font-size: 2.5rem;
 		margin-bottom: 20px;
 		background: transparent;
