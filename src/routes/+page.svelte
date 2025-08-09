@@ -193,7 +193,7 @@
 		<!-- 	>{keymapType === LayoutType.ALPHABETIC ? 'Alphabetic' : 'Random'}</button -->
 		<!-- > -->
 		<!-- <button onclick={() => resetTest()}>Reset</button> -->
-		<button onclick={() => resetTest()}>
+		<button onclick={() => switchLayoutState()}>
 			<svg
 				width="24"
 				height="24"
