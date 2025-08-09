@@ -47,19 +47,19 @@ $ # Open https://localhost:5137 in your browser
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot1](screenshots/screenshot1.png)
+Initial screen.
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot2](screenshots/screenshot2.png)
+Test using randomized keyboard layout.
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot3](screenshots/screenshot3.png)
+Test using alphabetic keyboard layout.
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+[Watch the demo video](https://drive.google.com/file/d/1ksg5640VDFvUWtjOskLhF49fEIrAXZYC/view)
+A pro typist battles scrambled keys and shattered muscle memory in a chaotic speed test.
 
 ## Team Contributions
 - Alwin Pramod: Programming
