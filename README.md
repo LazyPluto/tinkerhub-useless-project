@@ -28,8 +28,6 @@ We throw the keyboard layout out the window — literally! By jumbling up the ke
 - Languages used: HTML, CSS, JavaScript 
 - Frameworks used: Svelte
 
-### Implementation
-For Software:
 # Installation
 ```console
 $ git clone https://github.com/LazyPluto/tinkerhub-useless-project
@@ -43,9 +41,6 @@ $ npm run dev
 $ # Open https://localhost:5137 in your browser 
 ```
 
-### Project Documentation
-For Software:
-
 # Screenshots (Add at least 3)
 ![Screenshot1](screenshots/screenshot1.png)
 Initial screen.
@@ -56,9 +51,8 @@ Test using randomized keyboard layout.
 ![Screenshot3](screenshots/screenshot3.png)
 Test using alphabetic keyboard layout.
 
-### Project Demo
-# Video
-[Watch the demo video](https://drive.google.com/file/d/1ksg5640VDFvUWtjOskLhF49fEIrAXZYC/view)
+# Project Demo Video
+[Watch the demo video](https://drive.google.com/file/d/1ksg5640VDFvUWtjOskLhF49fEIrAXZYC/view)  
 A pro typist battles scrambled keys and shattered muscle memory in a chaotic speed test.
 
 ## Team Contributions
