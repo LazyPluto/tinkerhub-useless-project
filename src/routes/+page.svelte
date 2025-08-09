@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Keyboard from '$lib/components/Keyboard.svelte';
 	import { onMount } from 'svelte';
+	import { WORDS } from '$lib/wordlists/english';
 
 	const TestState = {
 		NOT_STARTED: 'NOT_STARTED',
@@ -8,15 +9,22 @@
 		ENDED: 'ENDED'
 	};
 
-	let words = prepareWords(
-		'The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog'
-	);
+	const LayoutType = {
+		ALPHABETIC: 'ALPHABETIC',
+		RANDOM: 'RANDOM'
+	};
+
+	// let words = prepareWords(
+	// 	'The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog'
+	// );
+	let words = prepareWords();
 	let letterStates = $state(prepareStates(words));
-	// let keymap = $state(prepareDefaultKeymap(0.5));
+	// let keymap = $state(prepareRandomKeymap(0.5));
+	// let keymap = $state(prepareRandomKeymap(0));
 	let keymap = $state(prepareABCDKeymap());
 	let timeLeft = $state(0);
-	let nextWord = 0;
-	let nextChar = 0;
+	let nextWord = $state(0);
+	let nextChar = $state(0);
 	let lettersTyped = 0;
 	let startTime: Date;
 	let endTime: Date;
@@ -24,17 +32,21 @@
 	let wpm = $state(0);
 	let timer: number;
 
-	function prepareWords(sentence: string): string[][] {
-		const words = sentence.toLowerCase().split(' ');
-		const result = words.map((word) => word.split(''));
-		return result;
+	function prepareWords(): string[][] {
+		const words = [];
+		for (let i = 0; i < 200; i++) {
+			const word = WORDS[Math.floor(Math.random() * WORDS.length)].toLowerCase().split('');
+			words.push(word);
+		}
+
+		return words;
 	}
 
 	function prepareStates(words: string[][]): boolean[][] {
 		return words.map((word) => word.map((_) => false));
 	}
 
-	function prepareDefaultKeymap(difficulty: number): Map<string, string> {
+	function prepareRandomKeymap(difficulty: number): Map<string, string> {
 		const letters = [];
 		for (let i = 65; i <= 90; i++) {
 			letters.push(i);
@@ -110,6 +122,7 @@
 		console.log('Stopping test');
 		testState = TestState.ENDED;
 		clearInterval(timer);
+		timeLeft = 0;
 	}
 
 	function updateWPM() {
@@ -158,7 +171,7 @@
 </script>
 
 <div class="test-container">
-	<h1>Typing Speed Test</h1>
+	<h1>Chaos Keys</h1>
 
 	<div class="stats {testState === TestState.NOT_STARTED ? 'hidden' : ''}">
 		<p>{timeLeft}s</p>
@@ -169,7 +182,16 @@
 		{#each words as word, wordIndex}
 			<div class="word">
 				{#each word as char, charIndex}
-					<div class="char {letterStates[wordIndex][charIndex] ? 'typed' : ''}">{char}</div>
+					<div
+						class="char
+							{letterStates[wordIndex][charIndex] ? 'typed' : ''}
+							{nextWord === wordIndex && nextChar === charIndex ? 'active' : ''}
+							{charIndex === word.length - 1 && nextWord === wordIndex && nextChar >= word.length
+							? 'last-active'
+							: ''}"
+					>
+						{char}
+					</div>
 				{/each}
 			</div>
 		{/each}
@@ -192,9 +214,14 @@
 		color: #cdd6f4;
 	}
 
+	h1 {
+		font-size: 32pt;
+		margin: 0;
+	}
+
 	.stats {
 		width: 75%;
-		margin-top: 8%;
+		margin-top: 2%;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
@@ -226,7 +253,23 @@
 		flex-direction: row;
 	}
 
+	.char {
+		display: flex;
+		flex-direction: row;
+	}
+
 	.char.typed {
 		color: #cdd6f4;
+	}
+
+	.char.active::before,
+	.char.last-active::after {
+		content: '';
+		display: inline;
+		width: 2px;
+		height: 65%;
+		margin-top: 0.15em;
+		display: block;
+		background-color: #f9e2af;
 	}
 </style>
