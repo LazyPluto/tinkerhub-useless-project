@@ -265,7 +265,8 @@
 	}
 
 	h1 {
-		font-size: 32pt;
+		font-family: 'Caesar Dressing';
+		font-size: 48pt;
 		margin: 0;
 	}
 
@@ -281,7 +282,7 @@
 	}
 
 	.controls button:hover {
-		color: #cdd6f4;
+		color: #fab387;
 	}
 
 	.stats {
@@ -291,6 +292,7 @@
 		flex-direction: row;
 		justify-content: space-between;
 		font-size: 16pt;
+		color: #fab387;
 	}
 
 	.hidden {

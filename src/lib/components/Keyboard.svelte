@@ -85,7 +85,7 @@
 	}
 
 	.key.pressed {
-		background-color: #b4befe;
+		background-color: #fab387;
 		color: white;
 	}
 </style>
